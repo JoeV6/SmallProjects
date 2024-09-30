@@ -12,16 +12,20 @@ public class Ram {
 
         System.out.println("RAM created with size " + sizeBytes + " bytes");
     }
+
     public void encodeInstructionData(int address, Cpu.InstructionData instructionData) {
         // Instruction is stored in the upper 8 bits
         // Operand1 is stored in the next 12 bits
         // Operand2 is stored in the lower 12 bits
 
         // format: [iiiiiiii][oooooooooooooooo][oooooooooooooooo]
+        // & operation with 0xFFF (1111 1111 1111) to make sure it doesn't exceed 12 bits
         memory[address] =
                 (instructionData.instruction.ordinal() << 24) |  // Instruction in upper 8 bits
-                        ((instructionData.operand1 & 0xFFF) << 12) |     // Operand1 in the middle 12 bits
-                        (instructionData.operand2 & 0xFFF);              // Operand2 in the lower 12 bits
+                ((instructionData.operand1 & 0xFFF) << 12) |     // Operand1 in the middle 12 bits
+                (instructionData.operand2 & 0xFFF);              // Operand2 in the lower 12 bits
+
+
     }
     public void dump() {
         // Dump memory with format [000] for index and 32-bit binary for the value

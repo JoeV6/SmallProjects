@@ -16,6 +16,7 @@ public class Motherboard {
 
         System.out.println("Motherboard connected to CPU and RAM\n");
     }
+
     public static ArrayList<Cpu.InstructionData> readInstructionsFromFile(String filePath) {
         ArrayList<Cpu.InstructionData> instructions = new ArrayList<>();
 
@@ -28,23 +29,25 @@ public class Motherboard {
                     line = line.substring(0, commentIndex).trim();
                 }
 
-                if (!line.isEmpty()) {
-                    // Split the line into parts based on spaces
-                    String[] parts = line.split("\\s+");
-                    if (parts.length > 0) {
-                        String instructionName = parts[0];
-                        try {
-                            Cpu.Instruction instruction = Cpu.Instruction.valueOf(instructionName);
+                if (line.isEmpty()) continue;
 
-                            int operand1 = parts.length > 1 ? Integer.parseInt(parts[1]) : 0; // Default to 0 if not provided
-                            int operand2 = parts.length > 2 ? Integer.parseInt(parts[2]) : 0; // Default to 0 if not provided
+                // Split the line into parts based on spaces
+                String[] parts = line.split("\\s+");
 
-                            // Add the instruction to the list
-                            instructions.add(new Cpu.InstructionData(instruction, operand1, operand2));
-                        } catch (IllegalArgumentException e) {
-                            System.err.println("Invalid instruction found: " + instructionName);
-                        }
-                    }
+                if (parts.length == 0) continue;
+
+                String instructionName = parts[0];
+
+                try {
+                    Cpu.Instruction instruction = Cpu.Instruction.valueOf(instructionName);
+
+                    int operand1 = parts.length > 1 ? Integer.parseInt(parts[1]) : 0; // Default to 0 if not provided
+                    int operand2 = parts.length > 2 ? Integer.parseInt(parts[2]) : 0;
+
+                    // Add the instruction to the list
+                    instructions.add(new Cpu.InstructionData(instruction, operand1, operand2));
+                } catch (IllegalArgumentException e) {
+                    System.err.println("Invalid instruction found: " + instructionName);
                 }
             }
         } catch (IOException e) {

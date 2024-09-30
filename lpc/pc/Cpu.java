@@ -2,23 +2,19 @@ package org.lpc.pc;
 
 public class Cpu {
     Motherboard motherboard;
-
     boolean isRunning;
-
     int[] registers;
     int programCounter;
 
     Cpu(Motherboard m, int registerCount) {
         this.motherboard = m;
-
-        isRunning = false;
+        this.isRunning = false;
+        this.programCounter = 0;
 
         registers = new int[registerCount];
         for(int i = 0; i < registerCount; i++) {
             registers[i] = 0;
         }
-
-        programCounter = 0;
 
         System.out.println("CPU created with " + registerCount + " registers");
     }

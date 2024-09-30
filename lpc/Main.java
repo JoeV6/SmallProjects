@@ -2,17 +2,76 @@ package org.lpc;
 
 import org.lpc.bintree.Binarytree;
 import org.lpc.calc.Calculator;
+import org.lpc.database.Database;
+import org.lpc.database.records.DatabaseRecord;
 import org.lpc.pc.Cpu;
 import org.lpc.pc.Motherboard;
 import org.lpc.pc.Ram;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        Computer();
+        Database();
     }
+    /*
+     * This method demonstrates the Database class
+     * A database is implemented using a B-tree for indexing
+     * The B-tree is a self-balancing tree data structure that maintains sorted data and allows
+     * searches, sequential access, insertions, and deletions in logarithmic time
+     *
+     * The Database class has the following methods:
+     *  1. insert(DatabaseRecord record): Insert a record into the database
+     *  2. retrieve(int key): Retrieve a record by its key
+     *  3. delete(int key): Delete a record by its key
+     *  4. filterByField(String fieldName, Object value): Filter records by a field value
+     *  5. printIndex(): Print the B-tree structure
+     */
+    public static void Database(){
+        Database database = new Database(3);
+
+        // Create a record with multiple fields
+        DatabaseRecord record1 = new DatabaseRecord(1);
+        record1.addField("name", "Alice");
+        record1.addField("age", 30);
+        record1.addField("city", "New York");
+
+        DatabaseRecord record2 = new DatabaseRecord(2);
+        record2.addField("name", "Bob");
+        record2.addField("age", 25);
+        record2.addField("height", 5.9);
+        record2.addField("isStudent", true);
+
+        database.insert(record1);
+        database.insert(record2);
+
+        for (int i = 0; i < 30; i++) {
+            DatabaseRecord record = new DatabaseRecord(i);
+            record.addField("name", "Person " + i);
+            record.addField("age", 20 + i);
+            database.insert(record);
+        }
+
+        // Retrieve and print a record
+        DatabaseRecord retrievedRecord = database.retrieve(1);
+        System.out.println("Retrieving key 1: " + retrievedRecord);
+
+        // Get specific field values
+        System.out.println("Name: " + retrievedRecord.getField("name"));
+        System.out.println("Age: " + retrievedRecord.getField("age"));
+
+        // Delete a record
+        database.delete(2);
+        System.out.println("After deleting key 2: " + database.retrieve(2));
+
+        Set<DatabaseRecord> filteredRecords = database.filterByField("age", 30);
+        for (DatabaseRecord rec : filteredRecords) {
+            System.out.println("Filtered Record: " + rec);
+        }
+    }
+
     /*
      * This method demonstrates an emulated computer using the CPU, RAM, and Motherboard classes
      * The CPU reads instructions from RAM and executes them
@@ -27,18 +86,18 @@ public class Main {
      *  8. OUT: Output the value in a register
      * The program is hardcoded in the Computer method
      * The program adds two numbers and outputs the result
-     *
      */
     public static void Computer() {
         Motherboard motherboard = new Motherboard();
         Ram ram = motherboard.getRAM();
         Cpu cpu = motherboard.getCPU();
 
-        ArrayList<Cpu.InstructionData> instructions = Motherboard.readInstructionsFromFile("src/main/java/org/lpc/pc/_program2.txt");
+        ArrayList<Cpu.InstructionData> instructions = Motherboard.readInstructionsFromFile("lpc/pc/_program2.txt");
 
         for (int i = 0; i < instructions.size(); i++) {
             ram.encodeInstructionData(i, instructions.get(i));
         }
+
         System.out.println("Program loaded into RAM\n");
 
         ram.dump();

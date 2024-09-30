@@ -1,11 +1,11 @@
 // INITIALIZATION
 
 // CALCULATOR
-SET 0 4    // first number
+SET 0 5    // first number
 STO 0 100   // store first number in RAM at 100
-SET 0 2    // second number
+SET 0 10    // second number
 STO 0 101   // store second number in RAM at 101
-SET 0 3     // initialize 0 = +, 1 = -, 2 = *, 3 = /
+SET 0 2     // initialize 0 = +, 1 = -, 2 = *, 3 = /
 
 // CONDITIONAL JUMP 6
 SET 1 1
