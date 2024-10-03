@@ -1,9 +1,9 @@
 // INITIALIZATION
 
 // CALCULATOR
-SET 0 5    // first number
+SET 0 13000    // first number
 STO 0 100   // store first number in RAM at 100
-SET 0 10    // second number
+SET 0 700    // second number
 STO 0 101   // store second number in RAM at 101
 SET 0 2     // initialize 0 = +, 1 = -, 2 = *, 3 = /
 

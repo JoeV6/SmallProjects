@@ -24,7 +24,10 @@ public class Database {
     }
 
     public DatabaseRecord retrieve(int key) {
-        return records.get(key);
+        if (index.search(key) != null) {
+            return records.get(key);
+        }
+        return null; // If key is not in the B-tree
     }
 
     public void delete(int key) {

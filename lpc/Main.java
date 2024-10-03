@@ -3,11 +3,13 @@ package org.lpc;
 import org.lpc.bintree.Binarytree;
 import org.lpc.calc.Calculator;
 import org.lpc.database.Database;
+import org.lpc.database.indexing.BTree;
 import org.lpc.database.records.DatabaseRecord;
 import org.lpc.pc.Cpu;
 import org.lpc.pc.Motherboard;
 import org.lpc.pc.Ram;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Set;
@@ -16,6 +18,7 @@ public class Main {
     public static void main(String[] args) {
         Database();
     }
+
     /*
      * This method demonstrates the Database class
      * A database is implemented using a B-tree for indexing
@@ -40,14 +43,17 @@ public class Main {
 
         DatabaseRecord record2 = new DatabaseRecord(2);
         record2.addField("name", "Bob");
-        record2.addField("age", 25);
+        record2.addField("age", 21);
         record2.addField("height", 5.9);
         record2.addField("isStudent", true);
 
         database.insert(record1);
         database.insert(record2);
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 150; i++) {
+            if (database.retrieve(i) != null) {
+                continue;
+            }
             DatabaseRecord record = new DatabaseRecord(i);
             record.addField("name", "Person " + i);
             record.addField("age", 20 + i);
@@ -58,18 +64,19 @@ public class Main {
         DatabaseRecord retrievedRecord = database.retrieve(1);
         System.out.println("Retrieving key 1: " + retrievedRecord);
 
-        // Get specific field values
-        System.out.println("Name: " + retrievedRecord.getField("name"));
-        System.out.println("Age: " + retrievedRecord.getField("age"));
-
         // Delete a record
-        database.delete(2);
-        System.out.println("After deleting key 2: " + database.retrieve(2));
+        // database.delete(2);
+        // System.out.println("After deleting key 2: " + database.retrieve(2));
 
         Set<DatabaseRecord> filteredRecords = database.filterByField("age", 30);
         for (DatabaseRecord rec : filteredRecords) {
             System.out.println("Filtered Record: " + rec);
         }
+
+        // Print the B-tree structure
+        database.prettyPrintDatabase();
+        database.prettyPrintIndex();
+
     }
 
     /*
