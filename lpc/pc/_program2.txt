@@ -1,9 +1,9 @@
 // INITIALIZATION
 
 // CALCULATOR
-SET 0 13000    // first number
+SET 0 5     // first number
 STO 0 100   // store first number in RAM at 100
-SET 0 700    // second number
+SET 0 5     // second number
 STO 0 101   // store second number in RAM at 101
 SET 0 2     // initialize 0 = +, 1 = -, 2 = *, 3 = /
 
@@ -14,7 +14,7 @@ JMZ 0 14   // jump to sub if first number is 0
 
 SUB 0 1    // subtract 1 from first number
 
-JMZ 0 20  // jump to add if first number is 1
+JMZ 0 20   // jump to add if first number is 1
 
 SUB 0 1    // subtract 1 from first number
 

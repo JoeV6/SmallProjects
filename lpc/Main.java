@@ -1,5 +1,7 @@
 package org.lpc;
 
+import org.lpc.beercalc.Beer;
+import org.lpc.beercalc.BeerRating;
 import org.lpc.bintree.Binarytree;
 import org.lpc.calc.Calculator;
 import org.lpc.database.Database;
@@ -16,7 +18,35 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        Database();
+        // Uncomment the method you want to run
+        // Beer();
+        // Database();
+        // Computer();
+        Calculator();
+        // BinaryTree();
+    }
+
+    public static void Beer(){
+        Beer beer = new Beer("Gayness");
+
+        BeerRating beerRating = new BeerRating.RatingBuilder()
+                .setAlcoholPercentage(8.0)
+                .setInitialTaste(8.5)
+                .setGeneralTaste(7.3)
+                .setAfterTaste(6.2)
+                .setTexture(9)
+                .setSmell(9)
+                .setCarbonation(4.0)
+                .setUniqueness(9.0)
+                .setDrinkability(8.4)
+                .setPrice(2)
+                .build();
+
+        double finalRating = beerRating.calculateFinalRating();
+
+        beer.addRating(beerRating);
+
+        System.out.println("Final Beer Rating: " + finalRating);
     }
 
     /*
@@ -111,6 +141,7 @@ public class Main {
         cpu.run();
 
     }
+
     /*
      * This method demonstrates the Calculator class
      * It reads input from the user and evaluates the expression
@@ -194,3 +225,4 @@ public class Main {
         tree.printTree(root);
     }
 }
+
